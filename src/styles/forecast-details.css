@@ -1,0 +1,12 @@
+.detailedForecast {
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  position: relative;
+  top: 100px;
+}
+
+  .formattedDate {
+    font-size: 30px;
+    font-weight: bold;
+  }

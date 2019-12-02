@@ -1,5 +1,6 @@
 import React from 'react';
 import ForecastSummary from './forecast-summary';
+import '../styles/forecast-summaries.css';
 // import LocationDetails from './location-details';
 
 import '../styles/forecast-summaries.css'
@@ -14,6 +15,7 @@ const ForecastSummaries = props => (
       description={forecast.description}
       icon={forecast.icon}
       temperature={forecast.temperature.max}
+      onSelect={props.onForecastSelect}
       />
     ))
   }

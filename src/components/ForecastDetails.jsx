@@ -1,14 +1,20 @@
 import React from 'react';
 import moment from 'moment';
+import '../styles/forecast-details.css';
 
 const ForecastDetails = props => {
-  return <div>
-    <span className="formattedDate">{moment(props.forecast.date).format('ddd Do MMM')}</span>
-    <span className="minTemp">{props.forecast.temperature.max}</span>
-    <span className="maxTemp">{props.forecast.temperature.min}</span>
-    <span className="windSpeed">{props.forecast.wind.speed}</span>
-    <span className="windDirection">{props.forecast.wind.direction}</span>
-    <span className="humidity">{props.forecast.humidity}</span>
+  return <div className="detailedForecast" >
+    <span className="formattedDate">Date: {moment(props.forecast.date).format('ddd Do MMM')}</span>
+    <br></br>
+    <span className="maxTemp">Max Temperature:{props.forecast.temperature.max}°C</span>
+    <br></br>
+    <span className="minTemp">Min Temperature: {props.forecast.temperature.min}°C</span>
+    <br></br>
+    <span className="windSpeed">Wind Speed: {props.forecast.wind.speed}mph</span>
+    <br></br>
+    <span className="windDirection">Wind Direction: {props.forecast.wind.direction}</span>
+    <br></br>
+    <span className="humidity">Humidity: {props.forecast.humidity}%</span>
   </div>;
 };
 
