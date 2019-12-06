@@ -1,9 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import LocationDetails from './location-details';
 import ForecastSummaries from './forecast-summaries';
-import '../styles/app.css';
 import ForecastDetails from './ForecastDetails';
+import SearchForm from './SearchForm';
+
+import '../styles/app.css';
 import Axios from 'axios';
 class App extends React.Component {
   constructor(props) {
@@ -21,26 +23,37 @@ class App extends React.Component {
     this.handleForecastSelect = this.handleForecastSelect.bind(this);
   }
 
-  componentDidMount() {
-    Axios.get(`https://mcr-codes-weather.herokuapp.com/forecast?city=Manchester`).then(data => {
-      const forecasts = data.data.forecasts.map(forecast => forecast);
-      const locationDetails = {
-        city: data.data.location.city,
-        country: data.data.location.country,
-      };
+  handleForecastSelect = date => {
+    this.setState({
+      selectedDate: date,
+    });
+  };
 
+  componentDidMount() {
+    Axios.get(`https://mcr-codes-weather.herokuapp.com/forecast`).then(response => {
       this.setState({
-        forecasts,
-        location: locationDetails,
+        location: {
+          city: response.data.location.city,
+          country: response.data.location.country,
+        },
+        forecasts: response.data.forecasts,
       });
     });
   }
 
-  handleForecastSelect(date) {
-    this.setState({
-      selectedDate: date,
+  handleCityRequest = (e, city) => {
+    e.preventDefault();
+
+    Axios.get(`https://mcr-codes-weather.herokuapp.com/forecast?city=${city}`).then(response => {
+      this.setState({
+        location: {
+          city: response.data.location.city,
+          country: response.data.location.country,
+        },
+        forecasts: response.data.forecasts,
+      });
     });
-  }
+  };
 
   render() {
     const selectedForecast = this.state.forecasts.find(
@@ -50,6 +63,10 @@ class App extends React.Component {
     return (
       <div className="forecast">
         <LocationDetails city={this.state.location.city} country={this.state.location.country} />
+
+        <SearchForm onSearch={this.handleCityRequest} />
+
+        <br></br>
 
         <ForecastSummaries
           forecasts={this.state.forecasts}
